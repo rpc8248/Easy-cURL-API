@@ -242,10 +242,16 @@ class APIAccess
      */
     public function view($result)
     {
+        echo '<pre>';
         echo "Results:
         
         ";
         print_r($result);
+        echo '
+        
+Json Output:
+        
+        </pre>';
         die(json_encode($result));
     }
     
