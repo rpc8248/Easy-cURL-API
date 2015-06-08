@@ -98,7 +98,7 @@ class APIAccess
                 '&grant_type='.'authorization_code';
                 
             curl_setopt($this->curl_handle, CURLOPT_CONNECTTIMEOUT, 2);
-            curl_setopt($this->curl_handle, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($this->curl_handle, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($this->curl_handle, CURLOPT_USERAGENT, 
                 'All In One YouTube Integration');
             curl_setopt($this->curl_handle, CURLOPT_POST, 1);
@@ -121,6 +121,7 @@ class APIAccess
             $header[] = 'Authorization: Bearer '.$access;
             curl_setopt($this->curl_handle, CURLOPT_HTTPHEADER, $header);
             curl_setopt($this->curl_handle, CURLOPT_POST, 0);
+            curl_setopt($this->curl_handle, CURLOPT_RETURNTRANSFER, true);
             return $header;
         }
         else return false;
@@ -134,16 +135,19 @@ class APIAccess
     {
         $this->currUrl = $url . $this->parseParams($params);
         curl_setopt($this->curl_handle, CURLOPT_URL, $this->currUrl);
-        $result = json_decode(curl_exec($this->curl_handle),true);
-        $this->nextToken = $result['nextPageToken'];
         
-        if(isset($result['error']))
+        $result = json_decode(curl_exec($this->curl_handle),true);
+        
+        // Usually happens because the session expires.
+        // Restart the session if that's the case.
+        if($result['error'])
         {
             $_GET['code'] = array();
-            $_SESSION['token'] = array();
             session_destroy();
             header("Location: ".$this->redirect);
         }
+        
+        $this->nextToken = $result['nextPageToken'];
         
         if(count($result) == 0)
         {
@@ -238,6 +242,10 @@ class APIAccess
      */
     public function view($result)
     {
+        echo "Results:
+        
+        ";
+        print_r($result);
         die(json_encode($result));
     }
     
