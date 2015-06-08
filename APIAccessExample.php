@@ -1,18 +1,18 @@
 <?php
 
-// This example gets all the videos from a playlist
-// Example playlist:
-// https://www.youtube.com/playlist?list=PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI
-$playlist_id = 'PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI'
-
-// Import the API accessor
-require_once 'APIAccess.php';
-
 // Client IDs and API keys. Generate these on Google's Dev Console.
 $OAUTH2_CLIENT_ID = '<Your client id>';
 $OAUTH2_CLIENT_SECRET = '<Your client secret>';
 $API_BROWSER_KEY = '<Your api browser key>';
 $API_SERVER_KEY = '<Your api server key>';
+
+// This example gets all the videos from a playlist
+// Example playlist:
+// https://www.youtube.com/playlist?list=PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI
+$playlist_id = 'PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI';
+
+// Import the API accessor
+require_once 'APIAccess.php';
 
 // Create the object that will be used to access the API
 $client = new APIAccess("Google");
