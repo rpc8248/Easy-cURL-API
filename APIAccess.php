@@ -105,7 +105,8 @@ class APIAccess
             curl_setopt($this->curl_handle, CURLOPT_URL, $url);
             $result = curl_exec($this->curl_handle);
             
-            if (true || strval($_SESSION['state']) !== strval($_GET['state'])) {
+            if (strval($_SESSION['state']) !== strval($_GET['state']))
+            {
                 die("The session state did not match.
                     <a href='$this->redirect'>Click here</a> to try again.");
             }
